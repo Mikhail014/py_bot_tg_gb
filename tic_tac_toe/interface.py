@@ -61,7 +61,7 @@ def check_turn(msg):
                 if n in win:
                     count += 1
                     if count == 3:
-                        bot.send_message(chat_id=msg.from_user.id, text=f"{data.players[data.ind]} победил!!! Поздравляем!!!")
+                        bot.send_message(chat_id=msg.from_user.id, text=f"Игрок {data.players[data.ind]} победил!!! Поздравляем!!!")
                         bot.send_message(chat_id=msg.from_user.id, text=update_field(data.playing_field))
                         reset_game()
                         return
