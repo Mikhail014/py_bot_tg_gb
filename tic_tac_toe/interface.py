@@ -48,6 +48,7 @@ def check_turn(msg):
     if (ans < 1 or ans > 9) or ans in (data.all_steps[0] + data.all_steps[1]):
         bot.register_next_step_handler(msg, check_turn)
         bot.send_message(chat_id=msg.from_user.id, text="Введи число от 1 до 9! Ходить на уже занятые позиции нельзя!")
+        return
     else:
         data.all_steps[data.ind].append(ans)
         for row in data.playing_field:
