@@ -1,11 +1,5 @@
-from telebot import TeleBot
-import emoji
-
-bot = TeleBot("5872986648:AAED0rgZ68Q8UO17B-z9HAGoINkJNGo7zPo")
-
-cross = "X" # emoji.emojize(":cross_mark:")
-zero = "0" # emoji.emojize(":hollow_red_circle:")
-# square = emoji.emojize(":green_square:")
+cross = "X"
+zero = "0"
 
 players = []
 ind = 0

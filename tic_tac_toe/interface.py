@@ -1,8 +1,9 @@
 from random import randint
+import data_bot
 from tic_tac_toe import data
 
 
-bot = data.bot
+bot = data_bot.bot
 
 
 def set_name_user1(msg):
