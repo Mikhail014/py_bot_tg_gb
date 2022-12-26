@@ -5,21 +5,32 @@ bot = data_bot.bot
 
 def set_operation(msg):
     ans = msg.text
+    data.write_logs(ans)
     if not ans.isdigit():
-        bot.send_message(chat_id=msg.from_user.id, text="Введите число!")
+        mess = "Введите число!"
+        bot.send_message(chat_id=msg.from_user.id, text=mess)
         bot.register_next_step_handler(msg, set_operation)
+        data.write_logs(mess)
         return
     else:
         ans = int(ans)
 
     if ans == 1:
-        bot.send_message(chat_id=msg.from_user.id, text="Выбрана операция сложения!")
+        mess = "Выбрана операция сложения!"
+        bot.send_message(chat_id=msg.from_user.id, text=mess)
+        data.write_logs(mess)
     elif ans == 2:
-        bot.send_message(chat_id=msg.from_user.id, text="Выбрана операция вычитания!")
+        mess = "Выбрана операция вычитания!"
+        bot.send_message(chat_id=msg.from_user.id, text=mess)
+        data.write_logs(mess)
     elif ans == 3:
-        bot.send_message(chat_id=msg.from_user.id, text="Выбрана операция умножения!")
+        mess ="Выбрана операция умножения!"
+        bot.send_message(chat_id=msg.from_user.id, text=mess)
+        data.write_logs(mess)
     elif ans == 4:
-        bot.send_message(chat_id=msg.from_user.id, text="Выбрана операция деления!")
+        mess ="Выбрана операция деления!"
+        bot.send_message(chat_id=msg.from_user.id, text=mess)
+        data.write_logs(mess)
     elif ans == 5:
         bot.send_message(chat_id=msg.from_user.id, text=data.show_logs())
         return
@@ -29,27 +40,37 @@ def set_operation(msg):
         return
 
     data.operation = ans
+    mess = "Введите первое число:"
     bot.register_next_step_handler(msg, enter_the_first_num)
-    bot.send_message(chat_id=msg.from_user.id, text="Введите первое число:")
-
+    bot.send_message(chat_id=msg.from_user.id, text=mess)
+    data.write_logs(mess)
 
 
 def enter_the_first_num(msg):
     ans = msg.text
+    data.write_logs(ans)
     if not ans.isdigit():
-        bot.send_message(chat_id=msg.from_user.id, text=f"Ввод данного текста '{ans}' преобразовывается в число 0")
+        mess = f"Ввод данного текста '{ans}' преобразовывается в число 0"
+        bot.send_message(chat_id=msg.from_user.id, text=mess)
         data.n1 = 0
+        data.write_logs(mess)
     else:
         data.n1 = int(ans)
 
+    mess = "Введите второе число:"
     bot.register_next_step_handler(msg, enter_the_second_num)
-    bot.send_message(chat_id=msg.from_user.id, text="Введите второе число:")
+    bot.send_message(chat_id=msg.from_user.id, text=mess)
+    data.write_logs(mess)
+
 
 def enter_the_second_num(msg):
     ans = msg.text
+    data.write_logs(ans)
     if not ans.isdigit():
-        bot.send_message(chat_id=msg.from_user.id, text=f"Ввод данного текста '{ans}' преобразовывается в число 0")
+        mess = f"Ввод данного текста '{ans}' преобразовывается в число 0"
+        bot.send_message(chat_id=msg.from_user.id, text=mess)
         data.n2 = 0
+        data.write_logs(mess)
     else:
         data.n2 = int(ans)
 
@@ -68,11 +89,12 @@ def enter_the_second_num(msg):
         bot.send_message(chat_id=msg.from_user.id, text=res)
     elif data.operation == 4:
         if n2 == 0:
-            bot.send_message(chat_id=msg.from_user.id, text="На ноль делить нельзя!")
+            res = "На ноль делить нельзя!"
+            bot.send_message(chat_id=msg.from_user.id, text=res)
+            data.write_logs(res)
             return
         res = f"{n1} / {n2} = {n1 / n2}"
         bot.send_message(chat_id=msg.from_user.id, text=res)
 
-    with open("./calc/logs_calc", "a") as file:
-        file.write(f"{res}\n")
+    data.write_logs(res)
 
