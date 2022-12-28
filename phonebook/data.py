@@ -1,3 +1,7 @@
+import os
+
+os.chdir(os.path.dirname(__file__))
+
 list_data = []
 lastname = None
 firstname = None
@@ -5,7 +9,7 @@ phone = None
 about = None
 
 def export_to_file(filename="contacts", mode=2):
-    with open(f"./phonebook/{filename}" , "a", encoding="utf-8") as file:
+    with open(filename, "a", encoding="utf-8") as file:
         for contact in list_data:
             for key, value in contact.items():
                 if mode == 1:
@@ -18,7 +22,7 @@ def export_to_file(filename="contacts", mode=2):
             file.write(f"\n")
 
 def import_from_file(filename="contacts"):
-    with open(f"./phonebook/{filename}", "r", encoding="utf-8") as file:
+    with open(filename, "r", encoding="utf-8") as file:
         data_file = file.readlines()
         imp_data = []
         for el in data_file:
