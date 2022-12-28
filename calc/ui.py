@@ -96,5 +96,8 @@ def enter_the_second_num(msg):
         res = f"{n1} / {n2} = {n1 / n2}"
         bot.send_message(chat_id=msg.from_user.id, text=res)
 
+    bot.send_message(chat_id=msg.from_user.id, text="Нажми 2, чтобы открыть меню операций. Или нажми на любой символ,"
+                                                    "кроме 1, 2 и 3, чтобы открыть главное меню.")
+
     data.write_logs(res)
 
