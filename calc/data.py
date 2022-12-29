@@ -5,6 +5,7 @@ os.chdir(os.path.dirname(__file__))
 operation = None
 n1 = None
 n2 = None
+is_complex_nums = False
 
 def write_logs(event):
     now = datetime.now()

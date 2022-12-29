@@ -40,6 +40,22 @@ def set_operation(msg):
         return
 
     data.operation = ans
+    mess = "Выберите режим работы калькулятора:\n" \
+           "Клавиша 1 -> Работа с комплексными числами\n" \
+           "Любая клавиша -> Работа с рациональными числами."
+    bot.register_next_step_handler(msg, select_type_calc)
+    bot.send_message(chat_id=msg.from_user.id, text=mess)
+    data.write_logs(mess)
+
+
+def select_type_calc(msg):
+    ans = msg.text
+    if ans == "1":
+        data.is_complex_nums = True
+        bot.send_message(chat_id=msg.from_user.id, text="Выбран режим работы с комплексными числами!")
+    else:
+        bot.send_message(chat_id=msg.from_user.id, text="Выбран режим работы с рациональными числами!")
+
     mess = "Введите первое число:"
     bot.register_next_step_handler(msg, enter_the_first_num)
     bot.send_message(chat_id=msg.from_user.id, text=mess)
@@ -79,13 +95,22 @@ def enter_the_second_num(msg):
     res = None
 
     if data.operation == 1:
-        res = f"{n1} + {n2} = {n1 + n2}"
+        if data.is_complex_nums:
+            res = f"{complex(n1, n2)} = z"
+        else:
+            res = f"{n1} + {n2} = {n1 + n2}"
         bot.send_message(chat_id=msg.from_user.id, text=res)
     elif data.operation == 2:
-        res = f"{n1} - {n2} = {n1 - n2}"
+        if data.is_complex_nums:
+            res = f"{complex(n1, n2).conjugate()} = z"
+        else:
+            res = f"{n1} - {n2} = {n1 - n2}"
         bot.send_message(chat_id=msg.from_user.id, text=res)
     elif data.operation == 3:
-        res = f"{n1} * {n2} = {n1 * n2}"
+        if data.is_complex_nums:
+            res = f"{n1 * n2}j = z"
+        else:
+            res = f"{n1} * {n2} = {n1 * n2}"
         bot.send_message(chat_id=msg.from_user.id, text=res)
     elif data.operation == 4:
         if n2 == 0:
@@ -93,11 +118,15 @@ def enter_the_second_num(msg):
             bot.send_message(chat_id=msg.from_user.id, text=res)
             data.write_logs(res)
             return
-        res = f"{n1} / {n2} = {n1 / n2}"
+        if data.is_complex_nums:
+            res = f"{n1 // n2 if n1 % n2 == 0 else n1 / n2}j = z"
+        else:
+            res = f"{n1} / {n2} = {n1 / n2}"
         bot.send_message(chat_id=msg.from_user.id, text=res)
 
     bot.send_message(chat_id=msg.from_user.id, text="Нажми 2, чтобы открыть меню операций. Или нажми на любой символ,"
                                                     "кроме 1, 2 и 3, чтобы открыть главное меню.")
 
+    data.is_complex_nums = False
     data.write_logs(res)
 
